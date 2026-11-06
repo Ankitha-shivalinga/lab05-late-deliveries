@@ -17,6 +17,7 @@ def test_feature_lists():
         "items",
         "hour",
         "courier_months",
+        "prep_minutes",
     ]
     assert CATEGORICAL_FEATURES == [
         "weather",
@@ -27,7 +28,7 @@ def test_feature_lists():
 
 def test_features_exclude_unavailable_columns():
     selected = set(NUMERIC_FEATURES + CATEGORICAL_FEATURES)
-    excluded = {"order_id", "prep_minutes", "customer_rating", "late"}
+    excluded = {"order_id", "customer_rating", "late"}
 
     assert selected.isdisjoint(excluded)
 

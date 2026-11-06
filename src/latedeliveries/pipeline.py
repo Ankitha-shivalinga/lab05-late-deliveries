@@ -13,6 +13,7 @@ NUMERIC_FEATURES = [
     "items",
     "hour",
     "courier_months",
+    "prep_minutes",
 ]
 
 CATEGORICAL_FEATURES = [

@@ -1,4 +1,4 @@
-"""Feature definitions, preprocessing, and model comparison for late-delivery prediction."""
+"""Feature preprocessing and model comparison for late deliveries."""
 
 from pathlib import Path
 
