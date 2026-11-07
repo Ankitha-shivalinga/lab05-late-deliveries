@@ -3,35 +3,34 @@
 from pathlib import Path
 
 import pandas as pd
-from sklearn.compose import ColumnTransformer
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import (
-    StratifiedKFold,
-    cross_validate,
-    train_test_split,
-)
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.tree import DecisionTreeClassifier
 
 from .data import make_orders
 
-RANDOM_STATE = 7
+# Features, split and preprocessing are defined once, in pipeline.py.
+# They are re-exported here so existing imports from this module keep working.
+from .pipeline import (
+    CATEGORICAL_FEATURES,
+    NUMERIC_FEATURES,
+    RANDOM_STATE,
+    build_pipeline,
+    split_orders,
+)
 
-NUMERIC_FEATURES = [
-    "distance_km",
-    "items",
-    "hour",
-    "courier_months",
-]
-
-CATEGORICAL_FEATURES = [
-    "weather",
-    "day_type",
-    "vehicle",
+__all__ = [
+    "CATEGORICAL_FEATURES",
+    "NUMERIC_FEATURES",
+    "RANDOM_STATE",
+    "SCORING",
+    "build_pipeline",
+    "compare_models",
+    "get_candidate_models",
+    "save_cv_results",
+    "split_orders",
 ]
 
 SCORING = {
@@ -41,49 +40,6 @@ SCORING = {
     "f1": "f1",
     "roc_auc": "roc_auc",
 }
-
-
-def split_orders(frame):
-    """Return a repeatable, stratified 75/25 train/test split."""
-    X = frame[NUMERIC_FEATURES + CATEGORICAL_FEATURES]
-    y = frame["late"]
-
-    return train_test_split(
-        X,
-        y,
-        test_size=0.25,
-        random_state=RANDOM_STATE,
-        stratify=y,
-    )
-
-
-def build_pipeline(model):
-    """Combine feature preprocessing with the supplied model."""
-    numeric_pipeline = Pipeline(
-        steps=[
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler()),
-        ]
-    )
-
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("numeric", numeric_pipeline, NUMERIC_FEATURES),
-            (
-                "categorical",
-                OneHotEncoder(handle_unknown="ignore"),
-                CATEGORICAL_FEATURES,
-            ),
-        ],
-        remainder="drop",
-    )
-
-    return Pipeline(
-        steps=[
-            ("preprocessor", preprocessor),
-            ("model", model),
-        ]
-    )
 
 
 def get_candidate_models():
