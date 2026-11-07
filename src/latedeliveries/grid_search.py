@@ -1,4 +1,3 @@
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 
@@ -6,9 +5,7 @@ from .pipeline_modified import build_pipeline
 
 
 def run_grid_search(X_train, y_train, folds):
-    model = build_pipeline(
-        LogisticRegression(max_iter=1000, random_state=7)
-    )
+    model = build_pipeline(LogisticRegression(max_iter=1000, random_state=7))
 
     param_grid = {
         "model__C": [0.1, 1, 10],
@@ -26,4 +23,3 @@ def run_grid_search(X_train, y_train, folds):
     search.fit(X_train, y_train)
 
     return search
-
