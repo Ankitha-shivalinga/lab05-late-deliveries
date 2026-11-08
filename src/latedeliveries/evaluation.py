@@ -7,7 +7,7 @@ THRESHOLDS = np.round(np.arange(0.05, 0.9501, 0.05), 2)
 
 
 def order_cost(y_true, flagged) -> int:
-    """Total cost: $4 per flagged order + $25 per late order not flagged."""
+    """Total cost: $4 per flagged order + $15 per late order not flagged."""
 
     late = np.asarray(y_true).astype(bool)
     flagged = np.asarray(flagged).astype(bool)

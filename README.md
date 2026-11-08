@@ -57,8 +57,8 @@ Five-fold stratified cross-validation on the training data only (2,250 orders), 
 |---|---|---|---|---|---|
 | DummyClassifier | 0.844 ± 0.001 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.500 ± 0.000 |
 | LogisticRegression | 0.860 ± 0.010 | 0.638 ± 0.093 | 0.239 ± 0.034 | 0.348 ± 0.049 | 0.806 ± 0.033 |
-| RandomForest | 0.858 ± 0.007 | 0.650 ± 0.084 | 0.199 ± 0.031 | 0.304 ± 0.042 | 0.776 ± 0.029 |
-| BalancedDecisionTree | 0.786 ± 0.016 | 0.315 ± 0.040 | 0.313 ± 0.057 | 0.312 ± 0.043 | 0.593 ± 0.026 |
+| RandomForest | 0.861 ± 0.007 | 0.678 ± 0.089 | 0.211 ± 0.024 | 0.321 ± 0.033 | 0.777 ± 0.028 |
+| BalancedDecisionTree | 0.789 ± 0.016 | 0.325 ± 0.045 | 0.327 ± 0.066 | 0.325 ± 0.050 | 0.601 ± 0.031 |
 
 The baseline reaches 0.844 accuracy by never flagging anyone, so accuracy cannot judge this problem. Missing a late order costs $15 and a voucher costs $4, so what matters is how well a model separates late orders from on-time ones; the threshold is chosen later from costs. That is ROC-AUC, and LogisticRegression is highest (0.806). The balanced
 tree has the best recall, but its ROC-AUC (0.593) shows it ranks orders poorly.
